@@ -1,3 +1,5 @@
+import scala.annotation.tailrec
+
 @main def entrypoint() =
   val input = FileLoader.readFile("input_test.txt")
   val stackDefinitions = input.takeWhile(_.nonEmpty)
@@ -27,6 +29,7 @@ object Crane:
     val (taken, current) = take(stacks, move)
     put(taken, current, move)
 
+  @tailrec
   def run(stacks: List[CrateStack], moves: List[Move]): List[CrateStack] =
     if moves.isEmpty then stacks
     else run(step(stacks, moves.head), moves.tail)
