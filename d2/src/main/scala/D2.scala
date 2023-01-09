@@ -1,9 +1,3 @@
-import Shape.A
-import Shape.B
-import Shape.C
-import Shape.X
-import Shape.Y
-import Shape.Z
 @main def entrypoint() =
   val input = FileLoader.readFile("input.txt")
   val shapes = ShapeParser.parseShapes(input).flatten
@@ -28,6 +22,7 @@ object Round:
         else RoundOutcome.Draw
 
     def strategy(left: Shape, right: Shape): Round =
+      import Shape.*
       val targetOutcome = right match
         case A => RoundOutcome.Lose
         case B => RoundOutcome.Draw
