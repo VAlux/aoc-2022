@@ -1,21 +1,18 @@
 import scala.annotation.tailrec
 
 @main def entrypoint() =
-  val input = FileLoader.readFile("input_test.txt")
+  val input = FileLoader.readFile("input.txt")
   val stackDefinitions = input.takeWhile(_.nonEmpty)
   val moveDefinitions = input.dropWhile(_.nonEmpty).drop(1)
   val stacks = StackParser.parse(stackDefinitions)
   val moves = MoveParser.parse(moveDefinitions)
-  val result = Crane.run(stacks, List(moves(0), moves(1)))
-  stacks.foreach(println)
-  println("-" * 20)
-  result.foreach(println)
+  val result = Crane(false).run(stacks, moves)
+  println(result.map(_.head).mkString)
 
 type CrateStack = List[Char]
 case class Move(val amount: Int, val from: Int, val to: Int)
 
-object Crane:
-
+class Crane(val canMoveMultiple: Boolean = true):
   def take(stacks: List[CrateStack], move: Move): (CrateStack, List[CrateStack]) =
     val stack = stacks(move.from)
     val taken = stack.take(move.amount)
