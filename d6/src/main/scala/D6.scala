@@ -2,8 +2,9 @@ import scala.annotation.tailrec
 
 @main def entrypoint() =
   val input = FileLoader.readFile("input.txt")
-  val resultPart1 = Scanner.locateDuplicate(input.head.toCharArray.toList, 4)
-  val resultPart2 = Scanner.locateDuplicate(input.head.toCharArray.toList, 14)
+  val chars = input.head.toCharArray.toList
+  val resultPart1 = Scanner.locateDuplicate(chars, 4)
+  val resultPart2 = Scanner.locateDuplicate(chars, 14)
   println(s"Part 1: $resultPart1")
   println(s"Part 2: $resultPart2")
 
