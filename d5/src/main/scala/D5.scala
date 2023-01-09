@@ -27,7 +27,7 @@ class Crane(val canMoveMultiple: Boolean = true):
     put(taken, current, move)
 
   @tailrec
-  def run(stacks: List[CrateStack], moves: List[Move]): List[CrateStack] =
+  final def run(stacks: List[CrateStack], moves: List[Move]): List[CrateStack] =
     if moves.isEmpty then stacks
     else run(step(stacks, moves.head), moves.tail)
 
