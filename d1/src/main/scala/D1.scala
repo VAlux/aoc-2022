@@ -3,7 +3,6 @@ import scala.annotation.tailrec
 @main def entrypoint: Unit =
   val input = FileLoader.readFile("input.txt")
   val elves = toElves(input)
-  val calories = maxCalories(elves)
   val top3ElvesCaloriesSum = sumCalories(topElves(elves, 3)).sum
   println(top3ElvesCaloriesSum)
 
