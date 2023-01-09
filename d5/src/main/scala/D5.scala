@@ -13,16 +13,16 @@ type CrateStack = List[Char]
 case class Move(val amount: Int, val from: Int, val to: Int)
 
 class Crane(val canMoveMultiple: Boolean = true):
-  def take(stacks: List[CrateStack], move: Move): (CrateStack, List[CrateStack]) =
+  private def take(stacks: List[CrateStack], move: Move): (CrateStack, List[CrateStack]) =
     val stack = stacks(move.from)
     val taken = stack.take(move.amount)
     val currentState = stacks.updated(move.from, stack.drop(move.amount))
     (taken, currentState)
 
-  def put(target: CrateStack, stacks: List[CrateStack], move: Move): List[CrateStack] =
-    stacks.updated(move.to, target ++ stacks(move.to))
+  private def put(target: CrateStack, stacks: List[CrateStack], move: Move): List[CrateStack] =
+    stacks.updated(move.to, (if canMoveMultiple then target else target.reverse) ++ stacks(move.to))
 
-  def step(stacks: List[CrateStack], move: Move): List[CrateStack] =
+  private def step(stacks: List[CrateStack], move: Move): List[CrateStack] =
     val (taken, current) = take(stacks, move)
     put(taken, current, move)
 
