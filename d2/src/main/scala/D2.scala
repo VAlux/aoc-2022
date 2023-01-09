@@ -1,3 +1,9 @@
+import Shape.A
+import Shape.B
+import Shape.C
+import Shape.X
+import Shape.Y
+import Shape.Z
 @main def entrypoint() =
   val input = FileLoader.readFile("input.txt")
   val shapes = ShapeParser.parseShapes(input).flatten
@@ -15,21 +21,38 @@ object Round:
     val score = shape.points + outcome.points
 
   def calculateRounds(shapes: List[(Shape, Shape)]): List[Round] =
-    def calculateOutcome(left: Shape, right: Shape): RoundOutcome =
-      if left.counterpart == right then RoundOutcome.Lose
-      else if right.counterpart == left then RoundOutcome.Win
-      else RoundOutcome.Draw
+    extension (left: Shape)
+      def vs(right: Shape): RoundOutcome =
+        if left.counterpart == right then RoundOutcome.Lose
+        else if right.counterpart == left then RoundOutcome.Win
+        else RoundOutcome.Draw
 
-    shapes.map((a, b) => Round(b, calculateOutcome(a, b)))
+    def strategy(left: Shape, right: Shape): Round =
+      val targetOutcome = right match
+        case A => RoundOutcome.Lose
+        case B => RoundOutcome.Draw
+        case C => RoundOutcome.Win
+        case X => RoundOutcome.Lose
+        case Y => RoundOutcome.Draw
+        case Z => RoundOutcome.Win
 
-sealed trait Shape(val points: Int, val counterpart: Shape)
+      val targetShape = targetOutcome match
+        case RoundOutcome.Lose => left.counterpart
+        case RoundOutcome.Draw => left
+        case RoundOutcome.Win  => left.weak
+
+      Round(targetShape, targetOutcome)
+
+    shapes.map((a, b) => strategy(a, b))
+
+sealed trait Shape(val points: Int, val counterpart: Shape, val weak: Shape)
 object Shape:
-  case object A extends Shape(1, Z)
-  case object B extends Shape(2, X)
-  case object C extends Shape(3, Y)
-  case object X extends Shape(1, C)
-  case object Y extends Shape(2, A)
-  case object Z extends Shape(3, B)
+  case object A extends Shape(1, Z, Y)
+  case object B extends Shape(2, X, Z)
+  case object C extends Shape(3, Y, X)
+  case object X extends Shape(1, C, B)
+  case object Y extends Shape(2, A, C)
+  case object Z extends Shape(3, B, A)
 
 object ShapeParser:
   private val shapeDescriptionMapping =

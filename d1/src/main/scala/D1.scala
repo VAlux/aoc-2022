@@ -27,4 +27,4 @@ def maxCalories(elves: List[Elf]): Int = sumCalories(elves).max
 
 def sortElves(elves: List[Elf]): List[Elf] = elves.sortBy(_.sum)
 
-def topElves(elves: List[Elf], n: Int): List[Elf] = sortElves(elves).reverse.take(n)
+def topElves(elves: List[Elf], n: Int): List[Elf] = sortElves(elves).takeRight(n)
