@@ -1,3 +1,5 @@
+import scala.annotation.tailrec
+
 @main def entrypoint: Unit =
   val input = FileLoader.readFile("input.txt")
   val elves = toElves(input)
@@ -8,6 +10,7 @@
 // represents an elf carrying a bag of calories
 type Elf = List[Int]
 
+@tailrec
 def toElves(
     input: List[String],
     current: List[String] = List.empty,
