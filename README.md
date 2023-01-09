@@ -1,4 +1,4 @@
-## Advent of Code 2022 in Scala 3
+## [Advent of Code 2022](https://adventofcode.com) in Scala 3
 
 ### Usage
 
