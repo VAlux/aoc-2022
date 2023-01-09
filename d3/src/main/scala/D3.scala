@@ -3,7 +3,10 @@ import scala.util.chaining.*
 @main def entrypoint() =
   val input = FileLoader.readFile("input.txt")
   val rucksacks = RucksackParser.parse(input)
-  val commonItemsPrioritiesSum = ItemPriority.sumPriorities(rucksacks.flatMap(RucksackScanner.findCommonItem))
+
+  val commonItemsPrioritiesSum =
+    rucksacks.flatMap(RucksackScanner.findCommonItem).pipe(ItemPriority.sumPriorities)
+
   val commonItemInGroupsOf3Elves =
     rucksacks.grouped(3).flatMap(RucksackScanner.findCommonItems).toList.pipe(ItemPriority.sumPriorities)
 
