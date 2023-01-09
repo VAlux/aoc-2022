@@ -5,7 +5,7 @@
   val top3ElvesCaloriesSum = sumCalories(topElves(elves, 3)).sum
   println(top3ElvesCaloriesSum)
 
-// represents elf carrying a bag of calories
+// represents an elf carrying a bag of calories
 type Elf = List[Int]
 
 def toElves(
@@ -23,6 +23,6 @@ def sumCalories(elves: List[Elf]): Elf = elves.map(_.sum)
 
 def maxCalories(elves: List[Elf]): Int = sumCalories(elves).max
 
-def sortElves(elves: List[Elf]): List[Elf] = elves.sortBy(_.sum).reverse
+def sortElves(elves: List[Elf]): List[Elf] = elves.sortBy(_.sum)
 
-def topElves(elves: List[Elf], n: Int): List[Elf] = sortElves(elves).take(n)
+def topElves(elves: List[Elf], n: Int): List[Elf] = sortElves(elves).reverse.take(n)
