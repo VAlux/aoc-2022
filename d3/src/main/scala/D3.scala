@@ -16,8 +16,8 @@ def findCommonItem(rucksack: Rucksack): Option[Char] =
   rucksack.firstCompartment.intersect(rucksack.secondCompartment).headOption
 
 object ItemPriority:
-  def sumPriorities(items: List[Char]): Int =
-    items.flatMap(priorities.get).sum
-
   private val priorities: Map[Char, Int] =
     (('a' to 'z') ++ ('A' to 'Z')).zipWithIndex.map((char, index) => (char, index + 1)).toMap
+
+  def sumPriorities(items: List[Char]): Int =
+    items.flatMap(priorities.get).sum
