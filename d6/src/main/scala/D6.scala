@@ -14,5 +14,5 @@ object Scanner:
       chunk.toSet.size == chunk.size
 
     input.zipWithIndex.sliding(windowSize).find(chunk => containsDuplicates(chunk.map(_._1))) match
-      case Some(chunk) => chunk.last._2 + 1
-      case _           => -1
+      case Some(_ :+ last) => last._2 + 1
+      case _               => -1
